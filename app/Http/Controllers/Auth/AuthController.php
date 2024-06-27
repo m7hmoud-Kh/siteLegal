@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\ResetPassword;
 use App\Models\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -55,10 +58,10 @@ class AuthController extends Controller
                 ]);
             }
 
-            Mail::to($request->email)->send(new ResetPasswordEmail([
-                'email' => $request->email,
-                'token' => $token,
-            ]));
+            // Mail::to($request->email)->send(new ResetPasswordEmail([
+            //     'email' => $request->email,
+            //     'token' => $token,
+            // ]));
             return 'Mail was sent, please Check Your Inbox';
         }
     }
