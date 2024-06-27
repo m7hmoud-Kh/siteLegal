@@ -17,7 +17,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'frontAppUrl' => env('frontAppUrl', 'http://localhost:3000'),
-
+    'per_page' => 10,
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'ar_SA',
 
     /*
     |--------------------------------------------------------------------------

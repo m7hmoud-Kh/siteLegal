@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,13 @@ Route::middleware('auth')->group(function(){
         Route::get('refresh','userProfile');
         Route::post('/update','update');
         Route::post('/change-password','changePassword');
+    });
+
+    Route::controller(ServiceController::class)->prefix('/services')->group(function(){
+        Route::get('/','index');
+        Route::get('/{serviceId}','show');
+        Route::post('/','store');
+        Route::post('/{serviceId}','update');
+        Route::delete('/{serviceId}','destory');
     });
 });
