@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\Service;
+namespace App\Http\Requests\Dashboard\Blog;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreServiceRequest extends FormRequest
+class StoreBlogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class StoreServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_en' => ['required','string','unique:services'],
-            'name_ar' => ['required','string','unique:services'],
+            'name_en' => ['required','string','unique:blogs'],
+            'name_ar' => ['required','string','unique:blogs'],
             'description_ar' => ['required','string'],
             'description_en' => ['required','string'],
             'image' => ['required','mimes:jpg,png,jpeg']

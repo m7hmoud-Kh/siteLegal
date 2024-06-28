@@ -36,6 +36,27 @@ return [
             'throw' => false,
         ],
 
+        'service' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Service/',
+        ],
+
+        'section' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Section/',
+        ],
+
+        'process' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Process/',
+        ],
+
+        'blog' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Blog/',
+        ],
+
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

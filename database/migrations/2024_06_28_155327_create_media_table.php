@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->string('name_en')->unique();
-            $table->string('name_ar');
-            $table->text('description_en');
-            $table->text('description_ar');
-            $table->boolean('status')->default(true);
+            $table->string('file_name');
+            $table->boolean('file_status');
+            $table->unsignedInteger('file_sort')->default(0);
+            $table->morphs('meddiable');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('media');
     }
 };

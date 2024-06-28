@@ -2,13 +2,13 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Service;
+use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-class ServiceResource extends JsonResource
+class ProcessResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -40,7 +40,7 @@ class ServiceResource extends JsonResource
             'status' => $this->status,
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s'),
             'media' => new MediaResource($this->whenLoaded('media')),
-            'ImagePath' =>$this->whenLoaded('media',Service::PATH_IMAGE),
+            'ImagePath' =>$this->whenLoaded('media',Process::PATH_IMAGE),
         ],$data);
     }
 }

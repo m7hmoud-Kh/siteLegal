@@ -6,12 +6,12 @@ use App\Http\Trait\Statusable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Section extends Model
 {
-    use HasFactory, Statusable;
+    use HasFactory,Statusable;
 
-    public const PATH_IMAGE = '/assets/Service/';
-    public const DISK_NAME = 'service';
+    public const PATH_IMAGE = '/assets/Section/';
+    public const DISK_NAME = 'section';
     protected $guarded = [];
 
     public function media()
@@ -19,9 +19,8 @@ class Service extends Model
         return $this->morphOne(Media::class,'meddiable');
     }
 
-    public function sections()
+    public function service()
     {
-        return $this->hasMany(Section::class);
+        return $this->belongsTo(Service::class);
     }
-
 }

@@ -3,59 +3,51 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Service\StoreServiceRequest;
-use App\Http\Requests\Dashboard\Service\UpdateServiceRequest;
-use App\Http\Resources\ServiceResource;
+use App\Http\Requests\Dashboard\Process\StoreProcessRequest;
+use App\Http\Requests\Dashboard\Process\UpdateProcessRequest;
+use App\Http\Resources\ProcessResource;
 use App\Http\Trait\Imageable;
 use App\Http\Trait\Paginatable;
-use App\Models\Service;
+use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
-use Serializable;
 
-class ServiceController extends Controller
+class ProcessController extends Controller
 {
     use Paginatable, Imageable;
     public function index()
     {
-        $allServices = Service::with('media')->latest()->paginate(Config::get('app.per_page'));
+        $allServices = Process::with('media')->latest()->paginate(Config::get('app.per_page'));
         return response()->json([
-            'services' => ServiceResource::collection($allServices),
+            'services' => ProcessResource::collection($allServices),
             'meta' => $this->getPaginatable($allServices),
         ]);
     }
 
 
-    public function store(StoreServiceRequest $request)
+    public function store(StoreProcessRequest $request)
     {
         //store
-        $service = Service::create($request->except('image'));
-        $newImage = $this->insertImage($service->name_en,$request->image,Service::PATH_IMAGE);
+        $service = Process::create($request->except('image'));
+        $newImage = $this->insertImage($service->name_en,$request->image,Process::PATH_IMAGE);
         $this->insertImageInMeddiable($service,$newImage,'media');
 
         return response()->json([
             'Message' => "Ok",
-            'data' => new ServiceResource($service)
+            'data' => new ProcessResource($service)
         ],Response::HTTP_CREATED);
     }
 
-    public function showGroupInSelection()
-    {
-        $allService = Service::Status()->latest()->get(['id','name_en']);
-        return response()->json([
-            'Status' => Response::HTTP_OK,
-            'data' => $allService
-        ]);
-    }
-    public function show($serviceId)
+
+    public function show($processId)
     {
         //show
-        $service = Service::with('media')->whereId($serviceId)->first();
+        $service = Process::with('media')->whereId($processId)->first();
         if($service){
             return response()->json([
                 'Message' => "Ok",
-                'data' => new ServiceResource($service)
+                'data' => new ProcessResource($service)
             ]);
         }else{
             return response()->json([
@@ -64,26 +56,26 @@ class ServiceController extends Controller
         }
     }
 
-    public function update(UpdateServiceRequest $request, $serviceId)
+    public function update(UpdateProcessRequest $request, $processId)
     {
         //update
-        $service = Service::whereId($serviceId)->first();
+        $service = Process::whereId($processId)->first();
         if($service){
             $service->update($request->except('image'));
             if($request->file('image')){
                 //remove old Image
                 $image = $service->media()->first();
                 if($image){
-                    $this->deleteImage(Service::DISK_NAME,$image);
+                    $this->deleteImage(Process::DISK_NAME,$image);
                     $service->media()->delete();
                 }
                 //insert New Image
-                $newImage = $this->insertImage($service->name_en,$request->image,Service::PATH_IMAGE);
+                $newImage = $this->insertImage($service->name_en,$request->image,Process::PATH_IMAGE);
                 $this->insertImageInMeddiable($service,$newImage,'media');
             }
             return response()->json([
                 'Message' => "Updated",
-                'data' => new ServiceResource($service)
+                'data' => new ProcessResource($service)
             ],Response::HTTP_ACCEPTED);
         }else{
             return response()->json([
@@ -92,14 +84,14 @@ class ServiceController extends Controller
         }
     }
 
-    public function destory($serviceId)
+    public function destory($processId)
     {
         //delete
-        $service = Service::whereId($serviceId)->first();
+        $service = Process::whereId($processId)->first();
         if($service){
             if($service->media){
                 $image = $service->media()->first();
-                $this->deleteImage(Service::DISK_NAME,$image);
+                $this->deleteImage(Process::DISK_NAME,$image);
                 $service->media()->delete();
             }
             $service->delete();
