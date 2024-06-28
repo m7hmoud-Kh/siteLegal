@@ -46,6 +46,16 @@ return [
             'root' => public_path() . '/assets/Section/',
         ],
 
+        'process' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Process/',
+        ],
+
+        'blog' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Blog/',
+        ],
+
 
         'public' => [
             'driver' => 'local',
