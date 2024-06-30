@@ -20,7 +20,7 @@ class ProcessController extends Controller
     {
         $allServices = Process::with('media')->latest()->paginate(Config::get('app.per_page'));
         return response()->json([
-            'services' => ProcessResource::collection($allServices),
+            'processes' => ProcessResource::collection($allServices),
             'meta' => $this->getPaginatable($allServices),
         ]);
     }
@@ -34,7 +34,7 @@ class ProcessController extends Controller
         $this->insertImageInMeddiable($service,$newImage,'media');
 
         return response()->json([
-            'Message' => "Ok",
+            'message' => "Ok",
             'data' => new ProcessResource($service)
         ],Response::HTTP_CREATED);
     }
@@ -46,12 +46,12 @@ class ProcessController extends Controller
         $service = Process::with('media')->whereId($processId)->first();
         if($service){
             return response()->json([
-                'Message' => "Ok",
+                'message' => "Ok",
                 'data' => new ProcessResource($service)
             ]);
         }else{
             return response()->json([
-                'Message' => 'Not Found'
+                'message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
     }
@@ -74,12 +74,12 @@ class ProcessController extends Controller
                 $this->insertImageInMeddiable($service,$newImage,'media');
             }
             return response()->json([
-                'Message' => "Updated",
+                'message' => "Updated",
                 'data' => new ProcessResource($service)
             ],Response::HTTP_ACCEPTED);
         }else{
             return response()->json([
-                'Message' => 'Not Found'
+                'message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
     }

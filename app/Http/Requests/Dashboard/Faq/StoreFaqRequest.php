@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\Blog;
+namespace App\Http\Requests\Dashboard\Faq;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateBlogRequest extends FormRequest
+class StoreFaqRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +22,10 @@ class UpdateBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_en' => ['string',Rule::unique('blogs')->ignore($this->blogId)],
-            'name_ar' => ['string',Rule::unique('blogs')->ignore($this->blogId)],
-            'description_ar' => ['string'],
-            'description_en' => ['string'],
-            'status' => ['boolean'],
-            'image' => ['mimes:jpg,png,jpeg,svg']
+            'question_en' => ['required','string','unique:faqs'],
+            'question_ar' => ['required','string','unique:faqs'],
+            'answer_en' => ['required','string'],
+            'answer_ar' => ['required','string'],
         ];
     }
 }

@@ -20,7 +20,7 @@ class SectionController extends Controller
     {
         $allServices = Section::with('media','service')->latest()->paginate(Config::get('app.per_page'));
         return response()->json([
-            'services' => SectionResource::collection($allServices),
+            'sections' => SectionResource::collection($allServices),
             'meta' => $this->getPaginatable($allServices),
         ]);
     }
@@ -34,7 +34,7 @@ class SectionController extends Controller
         $this->insertImageInMeddiable($service,$newImage,'media');
 
         return response()->json([
-            'Message' => "Ok",
+            'message' => "Ok",
             'data' => new SectionResource($service)
         ],Response::HTTP_CREATED);
     }
@@ -45,12 +45,12 @@ class SectionController extends Controller
         $service = Section::with('media')->whereId($secitonId)->first();
         if($service){
             return response()->json([
-                'Message' => "Ok",
+                'message' => "Ok",
                 'data' => new SectionResource($service)
             ]);
         }else{
             return response()->json([
-                'Message' => 'Not Found'
+                'message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
     }
@@ -73,12 +73,12 @@ class SectionController extends Controller
                 $this->insertImageInMeddiable($service,$newImage,'media');
             }
             return response()->json([
-                'Message' => "Updated",
+                'message' => "Updated",
                 'data' => new SectionResource($service)
             ],Response::HTTP_ACCEPTED);
         }else{
             return response()->json([
-                'Message' => 'Not Found'
+                'message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
     }

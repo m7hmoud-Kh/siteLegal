@@ -28,7 +28,7 @@ class UpdateProcessRequest extends FormRequest
             'description_ar' => ['string'],
             'description_en' => ['string'],
             'status' => ['boolean'],
-            'image' => ['mimes:jpg,png,jpeg']
+            'image' => ['mimes:jpg,png,jpeg,svg']
         ];
     }
 }

@@ -26,7 +26,7 @@ class StoreServiceRequest extends FormRequest
             'name_ar' => ['required','string','unique:services'],
             'description_ar' => ['required','string'],
             'description_en' => ['required','string'],
-            'image' => ['required','mimes:jpg,png,jpeg']
+            'image' => ['required','mimes:jpg,png,jpeg,svg']
         ];
     }
 }

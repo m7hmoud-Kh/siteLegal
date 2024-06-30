@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ServiceSeeder::class,
             SectionSeeder::class,
-            ProcessSeeder::class
+            ProcessSeeder::class,
+            MessageSeeder::class
         ]);
     }
 }
