@@ -3,59 +3,51 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Service\StoreServiceRequest;
-use App\Http\Requests\Dashboard\Service\UpdateServiceRequest;
-use App\Http\Resources\ServiceResource;
+use App\Http\Requests\Dashboard\Client\StoreClientRequest;
+use App\Http\Requests\Dashboard\Client\UpdateClientRequest;
+use App\Http\Resources\ClientReousrce;
 use App\Http\Trait\Imageable;
 use App\Http\Trait\Paginatable;
-use App\Models\Service;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
-use Serializable;
 
-class ServiceController extends Controller
+class ClientController extends Controller
 {
     use Paginatable, Imageable;
     public function index()
     {
-        $allServices = Service::with('media')->latest()->paginate(Config::get('app.per_page'));
+        $allServices = Client::with('media')->latest()->paginate(Config::get('app.per_page'));
         return response()->json([
-            'services' => ServiceResource::collection($allServices),
+            'clients' => ClientReousrce::collection($allServices),
             'meta' => $this->getPaginatable($allServices),
         ]);
     }
 
 
-    public function store(StoreServiceRequest $request)
+    public function store(StoreClientRequest $request)
     {
         //store
-        $service = Service::create($request->except('image'));
-        $newImage = $this->insertImage($service->name_en,$request->image,Service::PATH_IMAGE);
+        $service = Client::create($request->except('image'));
+        $newImage = $this->insertImage($service->name_en,$request->image,Client::PATH_IMAGE);
         $this->insertImageInMeddiable($service,$newImage,'media');
 
         return response()->json([
             'message' => "Ok",
-            'data' => new ServiceResource($service)
+            'data' => new ClientReousrce($service)
         ],Response::HTTP_CREATED);
     }
 
-    public function showGroupInSelection()
-    {
-        $allService = Service::Status()->latest()->get(['id','name_en']);
-        return response()->json([
-            'Status' => Response::HTTP_OK,
-            'data' => $allService
-        ]);
-    }
-    public function show($serviceId)
+
+    public function show($clientId)
     {
         //show
-        $service = Service::with('media')->whereId($serviceId)->first();
+        $service = Client::with('media')->whereId($clientId)->first();
         if($service){
             return response()->json([
                 'message' => "Ok",
-                'data' => new ServiceResource($service)
+                'data' => new ClientReousrce($service)
             ]);
         }else{
             return response()->json([
@@ -64,26 +56,26 @@ class ServiceController extends Controller
         }
     }
 
-    public function update(UpdateServiceRequest $request, $serviceId)
+    public function update(UpdateClientRequest $request, $clientId)
     {
         //update
-        $service = Service::whereId($serviceId)->first();
+        $service = Client::whereId($clientId)->first();
         if($service){
             $service->update($request->except('image'));
             if($request->file('image')){
                 //remove old Image
                 $image = $service->media()->first();
                 if($image){
-                    $this->deleteImage(Service::DISK_NAME,$image);
+                    $this->deleteImage(Client::DISK_NAME,$image);
                     $service->media()->delete();
                 }
                 //insert New Image
-                $newImage = $this->insertImage($service->name_en,$request->image,Service::PATH_IMAGE);
+                $newImage = $this->insertImage($service->name_en,$request->image,Client::PATH_IMAGE);
                 $this->insertImageInMeddiable($service,$newImage,'media');
             }
             return response()->json([
                 'message' => "Updated",
-                'data' => new ServiceResource($service)
+                'data' => new ClientReousrce($service)
             ],Response::HTTP_ACCEPTED);
         }else{
             return response()->json([
@@ -92,14 +84,14 @@ class ServiceController extends Controller
         }
     }
 
-    public function destory($serviceId)
+    public function destory($clientId)
     {
         //delete
-        $service = Service::whereId($serviceId)->first();
+        $service = Client::whereId($clientId)->first();
         if($service){
             if($service->media){
                 $image = $service->media()->first();
-                $this->deleteImage(Service::DISK_NAME,$image);
+                $this->deleteImage(Client::DISK_NAME,$image);
                 $service->media()->delete();
             }
             $service->delete();

@@ -27,7 +27,7 @@ class StoreSectionRequest extends FormRequest
             'description_ar' => ['required','string'],
             'description_en' => ['required','string'],
             'service_id' => ['required','exists:services,id'],
-            'image' => ['required','mimes:jpg,png,jpeg']
+            'image' => ['required','mimes:jpg,png,jpeg,svg']
         ];
     }
 }

@@ -56,6 +56,11 @@ return [
             'root' => public_path() . '/assets/Blog/',
         ],
 
+        'client' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Client/',
+        ],
+
 
         'public' => [
             'driver' => 'local',

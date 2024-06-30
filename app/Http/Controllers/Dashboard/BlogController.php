@@ -20,7 +20,7 @@ class BlogController extends Controller
     {
         $allServices = Blog::with('media')->latest()->paginate(Config::get('app.per_page'));
         return response()->json([
-            'services' => BlogResource::collection($allServices),
+            'blogs' => BlogResource::collection($allServices),
             'meta' => $this->getPaginatable($allServices),
         ]);
     }
@@ -34,7 +34,7 @@ class BlogController extends Controller
         $this->insertImageInMeddiable($service,$newImage,'media');
 
         return response()->json([
-            'Message' => "Ok",
+            'message' => "Ok",
             'data' => new BlogResource($service)
         ],Response::HTTP_CREATED);
     }
@@ -46,12 +46,12 @@ class BlogController extends Controller
         $service = Blog::with('media')->whereId($blogId)->first();
         if($service){
             return response()->json([
-                'Message' => "Ok",
+                'message' => "Ok",
                 'data' => new BlogResource($service)
             ]);
         }else{
             return response()->json([
-                'Message' => 'Not Found'
+                'message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
     }
@@ -74,12 +74,12 @@ class BlogController extends Controller
                 $this->insertImageInMeddiable($service,$newImage,'media');
             }
             return response()->json([
-                'Message' => "Updated",
+                'message' => "Updated",
                 'data' => new BlogResource($service)
             ],Response::HTTP_ACCEPTED);
         }else{
             return response()->json([
-                'Message' => 'Not Found'
+                'message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
     }

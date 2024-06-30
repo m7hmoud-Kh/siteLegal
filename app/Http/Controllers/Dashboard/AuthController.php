@@ -93,7 +93,7 @@ class AuthController extends Controller
             return 'Password Updated Successfully';
         }else{
             return response()->json([
-                'Message' => 'Data invalid'
+                'message' => 'Data invalid'
             ],Response::HTTP_BAD_REQUEST);
         }
     }

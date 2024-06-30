@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\BlogController;
+use App\Http\Controllers\Dashboard\ClientController;
+use App\Http\Controllers\Dashboard\FaqController;
+use App\Http\Controllers\Dashboard\MessageController;
 use App\Http\Controllers\Dashboard\ProcessController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SectionController;
@@ -54,5 +57,28 @@ Route::middleware('auth')->group(function(){
         Route::post('/','store');
         Route::post('/{blogId}','update');
         Route::delete('/{blogId}','destory');
+    });
+
+    Route::controller(ClientController::class)->prefix('/clients')->group(function(){
+        Route::get('/','index');
+        Route::get('/{clientId}','show');
+        Route::post('/','store');
+        Route::post('/{clientId}','update');
+        Route::delete('/{clientId}','destory');
+    });
+
+    Route::controller(FaqController::class)->prefix('/faqs')->group(function(){
+        Route::get('/','index');
+        Route::get('/{faqId}','show');
+        Route::post('/','store');
+        Route::post('/{faqId}','update');
+        Route::delete('/{faqId}','destory');
+    });
+
+
+    Route::controller(MessageController::class)->prefix('/messages')->group(function(){
+        Route::get('/','index');
+        Route::get('/{messageId}','show');
+        Route::delete('/{messageId}','destory');
     });
 });
