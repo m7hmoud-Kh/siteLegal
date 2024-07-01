@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\Faq;
+namespace App\Http\Requests\Dashboard\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateFaqRequest extends FormRequest
+class UpdateSettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +22,7 @@ class UpdateFaqRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_en' => ['string',Rule::unique('faqs')->ignore($this->faqId)],
-            'question_ar' => ['string',Rule::unique('faqs')->ignore($this->faqId)],
-            'answer_en' => ['string'],
-            'answer_ar' => ['string'],
-            'status' => ['boolean']
+            'value' => ['required','string']
         ];
     }
 }
