@@ -54,4 +54,31 @@ class ProfileController extends Controller
     }
 
 
+
+
+    public function getAllNotificaitons(){
+        $admin = User::whereId(Auth::guard('api')->user()->id)->first();
+        return response()->json([
+            'count' => $admin->notifications->count(),
+            'notifications' => $admin->notifications
+        ]);
+    }
+
+    public function getAllNotificaitonsUnread(){
+        $admin = User::whereId(Auth::guard('api')->user()->id)->first();
+        return response()->json([
+            'count' => $admin->unreadNotifications->count(),
+            'notifications' => $admin->unreadNotifications
+        ]);
+    }
+
+    public function markNotificationsAsRead(){
+        $admin = User::whereId(Auth::guard('api')->user()->id)->first();
+        $admin->unreadNotifications->markAsRead();
+        return response()->json([
+            'notifications' => $admin->notifications
+        ]);
+    }
+
+
 }

@@ -4,11 +4,14 @@ use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\BlogController;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\FaqController;
+use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\MessageController;
 use App\Http\Controllers\Dashboard\ProcessController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\ServiceController;
+use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\WhyUsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +22,17 @@ Route::controller(AuthController::class)->group(function(){
 
 });
 Route::middleware('auth')->group(function(){
+    Route::controller(HomeController::class)->group(function(){
+        Route::get('/statistics','index');
+    });
     Route::controller(ProfileController::class)->group(function(){
         Route::post('logout','logout');
         Route::get('refresh','userProfile');
         Route::post('/update','update');
         Route::post('/change-password','changePassword');
+        Route::get('/notifications','getAllNotificaitons');
+        Route::get('/notifications-unread','getAllNotificaitonsUnread');
+        Route::get('/notifications-mark','markNotificationsAsRead');
     });
 
     Route::controller(ServiceController::class)->prefix('/services')->group(function(){
@@ -74,6 +83,23 @@ Route::middleware('auth')->group(function(){
         Route::post('/{faqId}','update');
         Route::delete('/{faqId}','destory');
     });
+
+
+    Route::controller(WhyUsController::class)->prefix('/whyus')->group(function(){
+        Route::get('/','index');
+        Route::get('/{whyUsId}','show');
+        Route::post('/','store');
+        Route::post('/{whyUsId}','update');
+        Route::delete('/{whyUsId}','destory');
+    });
+
+    Route::controller(SettingController::class)->prefix('/settings')->group(function(){
+        Route::get('/','index');
+        Route::get('/{settingId}','show');
+        Route::post('/{settingId}','update');
+    });
+
+
 
 
     Route::controller(MessageController::class)->prefix('/messages')->group(function(){
