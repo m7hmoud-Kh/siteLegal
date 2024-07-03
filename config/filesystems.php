@@ -61,6 +61,12 @@ return [
             'root' => public_path() . '/assets/Client/',
         ],
 
+        'setting' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Setting/',
+        ],
+
+
 
         'public' => [
             'driver' => 'local',

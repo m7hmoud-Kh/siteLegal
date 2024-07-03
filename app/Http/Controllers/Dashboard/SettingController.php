@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Setting\UpdateSettingRequest;
 use App\Http\Resources\SettingResource;
+use App\Http\Trait\Imageable;
 use App\Http\Trait\Paginatable;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -13,10 +14,10 @@ use Illuminate\Support\Facades\Config;
 
 class SettingController extends Controller
 {
-    use Paginatable;
+    use Paginatable, Imageable;
     public function index()
     {
-        $allServices = Setting::paginate(Config::get('app.per_page'));
+        $allServices = Setting::with('media')->paginate(Config::get('app.per_page'));
         return response()->json([
             'settings' => SettingResource::collection($allServices),
             'meta' => $this->getPaginatable($allServices),
@@ -26,7 +27,7 @@ class SettingController extends Controller
     public function show($settingId)
     {
         //show
-        $service = Setting::whereId($settingId)->first();
+        $service = Setting::with('media')->whereId($settingId)->first();
         if($service){
             return response()->json([
                 'message' => "Ok",
@@ -42,9 +43,20 @@ class SettingController extends Controller
     public function update(UpdateSettingRequest $request, $settingId)
     {
         //update
-        $service = Setting::whereId($settingId)->first();
+        $service = Setting::with('media')->whereId($settingId)->first();
         if($service){
-            $service->update($request->validated());
+            if($request->file('image')){
+                //remove old Image
+                $image = $service->media()->first();
+                if($image){
+                    $this->deleteImage(Setting::DISK_NAME,$image);
+                    $service->media()->delete();
+                }
+                //insert New Image
+                $newImage = $this->insertImage($service->value,$request->image,Setting::PATH_IMAGE);
+                $this->insertImageInMeddiable($service,$newImage,'media');
+            }
+            $service->update($request->except('image'));
             return response()->json([
                 'message' => "Updated",
                 'data' => new SettingResource($service)

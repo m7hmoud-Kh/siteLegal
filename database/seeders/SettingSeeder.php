@@ -154,5 +154,31 @@ class SettingSeeder extends Seeder
             'language' => 'ar'
         ]);
         /*****End Home***** */
+
+        /*****Image Setting*** */
+        Setting::create([
+            'key' => 'logo',
+            'value' => 'alt_logo',
+            'language' => 'ar'
+        ]);
+
+        Setting::create([
+            'key' => 'logo',
+            'value' => 'alt_logo',
+            'language' => 'en'
+        ]);
+
+        Setting::create([
+            'key' => 'home_image',
+            'value' => 'alt_home_image',
+            'language' => 'ar'
+        ]);
+
+        Setting::create([
+            'key' => 'home_image',
+            'value' => 'alt_home_image',
+            'language' => 'en'
+        ]);
+        /*****End Image Setting****** */
     }
 }
