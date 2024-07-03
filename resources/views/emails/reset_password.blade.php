@@ -48,7 +48,7 @@
             <h2>Password Reset</h2>
             <p>Hello,  {{$emailData['email']}}</p>
             <p>We received a request to reset your password. Please click the link below to reset your password:</p>
-            <a href="{{config('app.frontAppUrl')}}/Resetpassword?token={{$emailData['token']}}"
+            <a href="{{config('app.frontAppUrl')}}/auth/dashboard/reset-password?token={{$emailData['token']}}"
             style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">
             Reset Password
             </a>
