@@ -14,7 +14,7 @@ class SettingController extends Controller
     public function index()
     {
         $local = App::getLocale();
-        $allSetting = Setting::where('language',$local)->get();
+        $allSetting = Setting::with('media')->where('language',$local)->get();
         return response()->json([
             'allSetting' => SettingResource::collection($allSetting),
         ]);

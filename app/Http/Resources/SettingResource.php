@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
@@ -19,7 +20,10 @@ class SettingResource extends JsonResource
             'id' => $this->id,
             'key' => $this->key,
             'value' => $this->value,
-            'language' => $this->language
+            'language' => $this->language,
+            'media' => new MediaResource($this->whenLoaded('media')),
+            'ImagePath' =>$this->whenLoaded('media',Setting::PATH_IMAGE),
+
         ];
     }
 }
