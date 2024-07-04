@@ -5,24 +5,19 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\ServiceResource;
-use App\Http\Trait\Paginatable;
 use App\Models\Section;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
 
 class ServiceController extends Controller
 {
     //
-    use Paginatable;
     public function index()
     {
-        $allServices = Service::with('media')->Status()->latest()->paginate(Config::get('app.per_page'));
+        $allServices = Service::with('media')->Status()->latest()->get();
         return response()->json([
             'services' => ServiceResource::collection($allServices),
-            'meta' => $this->getPaginatable($allServices),
         ]);
     }
 
