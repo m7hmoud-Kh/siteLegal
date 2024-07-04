@@ -18,6 +18,8 @@ class UserSeeder extends Seeder
     {
         Role::create(['guard_name' => 'api', 'name' => 'super_admin']);
         Role::create(['guard_name' => 'api', 'name' => 'admin']);
+        Role::create(['guard_name' => 'api', 'name' => 'supervisor']);
+
 
         $faker = Factory::create();
 

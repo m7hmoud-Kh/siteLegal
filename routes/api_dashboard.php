@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\BlogController;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\FaqController;
 use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\MessageController;
 use App\Http\Controllers\Dashboard\ProcessController;
 use App\Http\Controllers\Dashboard\ProfileController;
@@ -21,7 +22,21 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('/reset-password','resetPassword');
 
 });
+
+
 Route::middleware('auth')->group(function(){
+
+    Route::middleware(['role:super_admin'])
+    ->controller(ManagerController::class)
+    ->prefix('managers')
+    ->group(function(){
+        Route::get('/','index');
+        Route::get('/{managerId}','show');
+        Route::post('/','store');
+        Route::post('/{managerId}','update');
+        Route::delete('/{managerId}','destory');
+    });
+
     Route::controller(HomeController::class)->group(function(){
         Route::get('/statistics','index');
     });
