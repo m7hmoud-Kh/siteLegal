@@ -4,6 +4,7 @@ use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\ClientController;
 use App\Http\Controllers\Website\FaqController;
 use App\Http\Controllers\Website\MessageController;
+use App\Http\Controllers\Website\ProcessController;
 use App\Http\Controllers\Website\ServiceController;
 use App\Http\Controllers\Website\SettingController;
 use App\Http\Controllers\Website\WhyUsController;
@@ -48,3 +49,10 @@ Route::controller(BlogController::class)->prefix('/blogs')->group(function(){
     Route::get('/{blogId}','show');
 
 });
+
+Route::controller(ProcessController::class)->prefix('/processes')->group(function(){
+    Route::get('/','index');
+    Route::get('/{processId}','show');
+});
+
+
