@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('question_ar')->unique();
             $table->text('answer_en');
             $table->text('answer_ar');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
