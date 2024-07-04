@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\ClientController;
 use App\Http\Controllers\Website\FaqController;
 use App\Http\Controllers\Website\MessageController;
@@ -40,4 +41,10 @@ Route::controller(WhyUsController::class)->prefix('/whyus')->group(function(){
 
 Route::controller(SettingController::class)->prefix('/settings')->group(function(){
     Route::get('/','index');
+});
+
+Route::controller(BlogController::class)->prefix('/blogs')->group(function(){
+    Route::get('/','index');
+    Route::get('/{blogId}','show');
+
 });
