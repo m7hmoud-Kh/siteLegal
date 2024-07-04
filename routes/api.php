@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::controller(ServiceController::class)->prefix('/services')->group(function(){
-    Route::get('/','index');
-    Route::get('/{serviceId}/sections','getAllSectionBasedOnServiceId');
+Route::controller(ServiceController::class)->group(function(){
+    Route::get('/services','index');
+    Route::get('/services/{serviceId}/sections','getAllSectionBasedOnServiceId');
+    Route::get('/sections/{sectionId}','getSectionById');
 
 });
 
