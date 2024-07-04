@@ -124,6 +124,19 @@ class SettingSeeder extends Seeder
 
         Setting::create([
             'key' => 'vision',
+            'value' => 'وصف الرؤيه',
+            'language' => 'ar'
+        ]);
+
+
+        Setting::create([
+            'key' => 'mission',
+            'value' => 'description on mission',
+            'language' => 'en'
+        ]);
+
+        Setting::create([
+            'key' => 'mission',
             'value' => 'وصف المهمه',
             'language' => 'ar'
         ]);
